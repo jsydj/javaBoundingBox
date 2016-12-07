@@ -9,8 +9,62 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-public class boundingBox {
+public class BoundingBox implements BoundingBoxInterface {
 
+	public List<String> fetchBoundingTriples(int leftXInt, int rightXInt, int lowerYInt, int upperYInt) {
+
+		File directory = new File("./");
+		//System.out.println(directory.getAbsolutePath());
+		
+        String csvFile = "./sample_data.csv";
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = " ";
+        List<String> foundCoordinates=new ArrayList<String>();
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] triples = line.split(" ");
+
+                double x=0, y=0, value=0;
+                for(String oneTriple:triples) {
+                	String[] csvValue = oneTriple.split(",");
+                	x = Double.parseDouble(csvValue[0]);
+                	y = Double.parseDouble(csvValue[1]);
+                	value = Double.parseDouble(csvValue[2]);
+                	
+                	if (x>=leftXInt && x<=rightXInt && y>=lowerYInt && y<=upperYInt) {
+                		foundCoordinates.add(x+","+y+","+value+" ");
+                		//System.out.println("***"+"x="+x+", y="+y+", value="+value+"\n");
+                	}
+                	//else System.out.println("x="+x+", y="+y+", value="+value+"\n");
+                	
+                }
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return (foundCoordinates);
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
