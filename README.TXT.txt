@@ -5,3 +5,7 @@ To run the project, simply:
 Error input will require you enter until correct.
 4) Result of cordinates found in sample_data.csv within
 bounding box cordinates will be output to query_results.txt
+
+5) For interface to boundingBox, implements BoundingBoxInterface()
+and invoke:
+public List<String> fetchBoundingTriples(int leftXInt, int rightXInt, int lowerYInt, int upperYInt) {
